@@ -1,5 +1,6 @@
 databases:
-  - name: taskmanager-db
+  - name: task-manager-db
+    databaseName: taskmanager
     plan: free
 
 services:
@@ -11,7 +12,11 @@ services:
     envVars:
       - key: MONGO_URI
         fromDatabase:
-          name: taskmanager-db
+          name: task-manager-db
           property: connectionString
-      - key: j2s5v8y/B?E(H+MbQeThWmZq4t7w9z$C
-        sync: false
+
+  - name: frontend
+    type: web
+    env: docker
+    plan: free
+    dockerfilePath: ./frontend/Dockerfile
