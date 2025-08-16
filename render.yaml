@@ -1,7 +1,7 @@
 services:
   - name: mongodb
-    type: pserv # Private Service
-    env: docker # <-- This line is essential
+    type: pserv
+    env: docker
     image:
       url: mongo:latest
     disk:
@@ -10,16 +10,16 @@ services:
       sizeGB: 1
 
   - name: backend
-    type: web # Web Service
+    type: web
     env: docker
     dockerfilePath: ./backend/Dockerfile
     envVars:
       - key: MONGO_URI
         value: mongodb://mongodb:27017/taskmanager
       - key: JWT_SECRET
-        sync: false # You will set this in the Render dashboard
+        sync: false
 
   - name: frontend
-    type: web # Web Service
+    type: web
     env: docker
     dockerfilePath: ./frontend/Dockerfile
