@@ -1,3 +1,7 @@
+databases:
+  - name: taskmanager-db
+    plan: free
+
 services:
   - name: backend
     type: web
@@ -11,20 +15,3 @@ services:
           property: connectionString
       - key: j2s5v8y/B?E(H+MbQeThWmZq4t7w9z$C
         sync: false
-
-  - name: frontend
-    type: web
-    env: docker
-    plan: free
-    dockerfilePath: ./frontend/Dockerfile
-    dockerBuildArgs:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: backend
-          property: url
-          path: /api/
-
-databases:
-  - name: taskmanager-db
-    plan: free
