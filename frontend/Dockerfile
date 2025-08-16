@@ -1,12 +1,11 @@
 ### BUILD STAGE ###
 FROM node:18-alpine AS build
-ENV NODE_OPTIONS=--max-old-space-size=460
 WORKDIR /app
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
-COPY . .
+COPY frontend/ .
+ENV NODE_OPTIONS=--max-old-space-size=460
 RUN npm run build
-
 
 ### PRODUCTION STAGE ###
 FROM nginx:stable-alpine

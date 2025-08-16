@@ -1,6 +1,6 @@
 services:
-  - type: web
-    name: backend
+  - name: backend
+    type: web
     env: docker
     plan: free
     dockerfilePath: ./backend/Dockerfile
@@ -12,8 +12,8 @@ services:
       - key: j2s5v8y/B?E(H+MbQeThWmZq4t7w9z$C
         sync: false
 
-  - type: web
-    name: frontend
+  - name: frontend
+    type: web
     env: docker
     plan: free
     dockerfilePath: ./frontend/Dockerfile
