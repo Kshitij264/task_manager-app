@@ -7,18 +7,16 @@ services:
   - name: backend
     type: web
     env: docker
-    plan: free # <-- Add this line
+    plan: free
     dockerfilePath: ./backend/Dockerfile
     envVars:
       - key: MONGO_URI
         fromDatabase:
           name: task-manager-db
           property: connectionString
-      - key: j2s5v8y/B?E(H+MbQeThWmZq4t7w9z$C
-        sync: false
 
   - name: frontend
     type: web
     env: docker
-    plan: free # <-- And add this line
+    plan: free
     dockerfilePath: ./frontend/Dockerfile
