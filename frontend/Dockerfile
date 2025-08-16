@@ -2,9 +2,9 @@
 FROM node:18-alpine AS build
 ENV NODE_OPTIONS=--max-old-space-size=460
 WORKDIR /app
-COPY frontend/package*.json ./
+COPY package*.json ./
 RUN npm install
-COPY frontend/ .
+COPY . .
 RUN npm run build
 
 
