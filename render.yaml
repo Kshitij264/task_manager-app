@@ -13,8 +13,6 @@ services:
         fromDatabase:
           name: task-manager-db
           property: connectionString
-      - key: j2s5v8y/B?E(H+MbQeThWmZq4t7w9z$C
-        sync: false
 
   - name: frontend
     type: web
