@@ -2,18 +2,23 @@ import React from 'react';
 import { Paper, Typography, Box, IconButton, Chip } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '../features/taskSlice';
 
-function TaskItem({ task }) {
+// Add 'onEdit' to the component's props
+function TaskItem({ task, onEdit }) {
+  const dispatch = useDispatch();
+
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'High':
-        return 'error';
-      case 'Medium':
-        return 'warning';
-      case 'Low':
-      default:
-        return 'success';
+      case 'High': return 'error';
+      case 'Medium': return 'warning';
+      default: return 'success';
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteTask(task._id));
   };
 
   return (
@@ -32,10 +37,11 @@ function TaskItem({ task }) {
         </Box>
       </Box>
       <Box>
-        <IconButton aria-label="edit" color="primary">
+        {/* Call the onEdit function when the button is clicked, passing this task */}
+        <IconButton aria-label="edit" color="primary" onClick={() => onEdit(task)}>
           <EditIcon />
         </IconButton>
-        <IconButton aria-label="delete" color="error">
+        <IconButton aria-label="delete" color="error" onClick={handleDelete}>
           <DeleteIcon />
         </IconButton>
       </Box>

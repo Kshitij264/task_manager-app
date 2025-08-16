@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getTasks, reset } from '../features/taskSlice';
 import TaskForm from '../components/TaskForm';
-import TaskItem from '../components/TaskItem'; // Import the new component
+import TaskItem from '../components/TaskItem';
+import EditTaskModal from '../components/EditTaskModal'; // Import the modal
 import { Box, Typography, CircularProgress, Divider } from '@mui/material';
 
 function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Modal State
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentTask, setCurrentTask] = useState(null);
 
   const { user } = useSelector((state) => state.auth);
   const { tasks, isLoading, isError, message } = useSelector(
@@ -28,6 +33,17 @@ function Dashboard() {
       dispatch(reset());
     };
   }, [user, navigate, isError, message, dispatch]);
+  
+  // Modal handler functions
+  const handleOpenEditModal = (task) => {
+    setCurrentTask(task);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setCurrentTask(null);
+  };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -45,7 +61,6 @@ function Dashboard() {
       </Box>
 
       <TaskForm />
-
       <Divider sx={{ my: 4 }} />
 
       <Box>
@@ -55,13 +70,22 @@ function Dashboard() {
         {tasks && tasks.length > 0 ? (
           <Box>
             {tasks.map((task) => (
-              <TaskItem key={task._id} task={task} />
+              <TaskItem key={task._id} task={task} onEdit={handleOpenEditModal} />
             ))}
           </Box>
         ) : (
           <Typography>You have no tasks to display.</Typography>
         )}
       </Box>
+
+      {/* Conditionally render the modal */}
+      {currentTask && (
+        <EditTaskModal
+          task={currentTask}
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+        />
+      )}
     </>
   );
 }
